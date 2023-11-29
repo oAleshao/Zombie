@@ -10,48 +10,105 @@
 </head>
 
 <body>
-
   <audio id="backSound" src="./sounds/бекСаунд_.mp3"></audio>
     <header>
-        <p>CHRISTMAS ZOMBIE</p>
-        <button id="start">START GAME</button>
+      
+      <!-- <ul class="lightrope">
+        <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+      </ul> -->
+      <div>
+        <div class="arm4">
+          <img src="img/arm.png">
+         </div>
+      </div>
+      <div>
+        <div class="arm3">
+          <img src="img/arm2.png">
+         </div>
+      </div>
+      <div>
+        <div class="arm1">
+          <img src="img/arm.png">
+         </div>
+      </div>
+      <div class="title">
+        <h1>CHRISTMAS ZOMBIE</h1>
+        <button id="start">Start Game</button>
+      </div>
+      <!-- <h1>CHRISTMAS ZOMBIE</h1>
+      <button id="start">START GAME</button> -->
+      <div>
+        <div class="arm4">
+          <img src="img/arm2.png">
+         </div>
+      </div>
+      <div>
+        <div class="arm1">
+          <img src="img/arm.png">
+         </div>
+      </div>
+      <div>
+        <div class="arm2">
+          <img src="img/arm2.png">
+         </div>
+      </div>
+       
+        
     </header>
 
 <section class="game">
   <div id="menu">
 
     <div id="rules">
+      <div>
         <h3>Правила игры</h3>
-        <p>Вам надо уничтожить всех зомби. Для этого вы можете купить дополнительные орудия нападения. Выбирайте в меню ниже.</p>
+        <p>Вам надо уничтожить всех зомби. Для этого вы можете купить 
+          дополнительные орудия нападения. Выбирайте в меню ниже.</p>
+      </div>
+       
+        <div>
+          <p>Набрано очков:</p>
+          <p class="scoreCurrent">0</p>
+        </div>
+        <div>
+          <p>Максимальный счёт:</p>
+          <p class="scoreMax">0</p>
+        </div>
+        
     </div>
     
 
   <div id="weapon">
     <ul>
         <li>
-            <img src="img/stone.png" alt="stone">
-            <p>Камень</p>
-            <button>100</button>
+          <div><img src="img/stone.png" alt="stone"></div>
+          <div><p>Камень</p></div>
+          <div><button>100</button></div>
+           
         </li>
         <li>
-            <img src="img/bat.png" alt="bat">
-            <p>Бита</p>
-            <button>150</button>
+          <div><img src="img/bat.png" alt="bat"></div>
+          <div><p>Бита</p></div>
+          <div><button>150</button></div>
         </li>
         <li>
-            <img src="img/axe.png" alt="axe">
-            <p>Топор</p>
-            <button>300</button>
+          <div><img src="img/axe.png" alt="axe"></div>
+          <div><p>Топор</p></div>
+          <div><button>300</button></div>
         </li>
         <li>
-            <img src="img/mace.png" alt="mace">
-            <p>Булава</p>
-            <button>500</button>
+          <div><img src="img/mace.png" alt="mace"></div>
+          <div><p>Булава</p></div>
+          <div><button>500</button></div>
         </li>
         <li>
-            <img src="img/chainsaw.png" alt="chainsaw">
-            <p>Бензопила</p>
-            <button>700</button>
+          <div><img src="img/benzopila.png" alt="chainsaw"></div>
+          <div><p>Бензопила</p></div>
+          <div><button>700</button></div>
+        </li>
+        <li>
+          <div><img src="img/soundOn.png" alt="soundOn"></div>
+          <div><img src="img/soundOff.png" alt="soundOff"></div>
         </li>
     </ul>
   </div>
@@ -59,11 +116,12 @@
 
 
 <div id="fealdGame">
-  <div class="zima"> 
-    <img src="img/back.png" alt="">
-  </div>
+  
 </section>
 
+  <footer>
+    <p>&copy All Rights Reserved by Aleksey Salnik, Sergey Matviichuk, Tatiana Babinets, Kateryna Kornytska</p>
+  </footer>
 
  </body>
 
