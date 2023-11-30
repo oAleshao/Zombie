@@ -25,7 +25,9 @@ document.addEventListener("contextmenu", (event)=>
 
 //////////////////////////////////////////////////
 
-let arrSkin = ['./img/0.png','./img/1.png' ,'./img/2.png' , './img/3.png' , './img/4.png' , './img/5.png', './img/6.png'];
+let arrSkin = ['./img/0.png','./img/1.png' ,'./img/2.png' , './img/3.png' , './img/4.png' , './img/5.png'];
+let arrSkinBoss = ['./img/boss0.png','./img/boss1.png' ,'./img/boss2.png' , './img/boss3.png'];
+let positionTop = [10, 30, 50, 60,];
 let arrHp = [100,150, 200,250,300];
 
 
@@ -207,8 +209,6 @@ function setGunDamage(gun) {
     }
     ChoseGun = gun;    
     document.getElementById(gun).classList.add("activeGun");  
-    ChosenGunDamage = gun.upDamage;
-      console.log(ChosenGunDamage);
     
 }
 
@@ -226,11 +226,11 @@ function upgradeGun(gun)
 
 function CreateZombie(flagBoss)
 { 
-    let RundNum = Math.floor(Math.random()*5);
+    let RundNum = Math.floor(Math.random()*6);
     let zomb = new zombiePrototype(arrSkin[RundNum],arrHp[RundNum]);
 
 
-    let startPosition = 93;
+    let startPosition = 35;
     let blockZ = document.createElement("div");
     blockZ.className = "zombies";
     blockZ.style.position = "absolute";
@@ -317,21 +317,30 @@ function gameOver(){
     let end = document.createElement("div");
     end.style.top = "0%";
     end.style.left = "0%";
-    end.style.background = "black";
+    end.style.background = "rgba(0,0,0,0.7)";
     end.style.width = "100%";
     end.style.height = "90vh";
-    end.style.opacity = "0.7";
     end.style.zIndex = "3";
+    end.style.display = "flex";
+    end.style.justifyContent = "center";
+    end.style.alignContent = "center";
+
+    
+    let imgGameOver = document.createElement("img");
+    imgGameOver.src = "./img/gameOver.png";
+    imgGameOver.style.width = "50%";
+    imgGameOver.style.height = "40%";
+    imgGameOver.style.margin = "15% auto"
+    
+
+    
+    end.append(imgGameOver);
 
     document.querySelectorAll('.zombies').forEach(function(elem){
         elem.parentNode.removeChild(elem);
     });
 
-    //let imgGameOver = document.createElement("div");
-    //imgGameOver.background = "url(./img/gameOver.png)";
-    //imgGameOver.style.zIndex = "4";
 
-    //fealdGame.append(imgGameOver);
     
     fealdGame.append(end);
 }
