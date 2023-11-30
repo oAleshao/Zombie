@@ -5,7 +5,12 @@
 
 
 
+
 start.onclick = () =>{
+
+    backSound.volume = 0.1;
+    backSound.loop = true;
+    backSound.play();
 
     let startPosition = 95;
     let blockZ = document.createElement("div");
@@ -15,10 +20,10 @@ start.onclick = () =>{
     blockZ.style.left =  startPosition + "%";
 
 
-    let number = Math.floor(Math.random() * 7);
+    let number = Math.floor(Math.random() * 3);
     let z = document.createElement("img");
     z.id = "zombi";
-    z.src = `img/${number}.png`;
+    z.src = `img/boss${number}.png`;
     z.style.fill = "fill";
     z.style.height = "130px";
     z.style.width = "80px";
@@ -48,7 +53,11 @@ start.onclick = () =>{
             fealdGame.removeChild(blockZ);
             return;
         }
-        width -= 2;
+        let slap = document.createElement("audio");
+        slap.src = "./sounds/faceSlap.mp3";
+        slap.volume = 0.6;
+        slap.play();
+        width -= 5;
         health.style.width = (width) + "px";
         
     }
