@@ -142,6 +142,8 @@ header button:hover
     height: 90vh;
     background: url(img/back.png);
     background-size: cover;
+    position: relative;
+    overflow: hidden;
   }
 
 /* ///////////////////  menu  ///////////////////// */
@@ -316,6 +318,22 @@ header button:hover
   color: white;
 }
 
+ul li.activeGun{
+  border: 5px solid rgb(128, 0, 0);
+}
+
+ul li div img.activeBtn{
+  transition: 0.4s;
+  border: 2px solid gray;
+  background-color: darkgreen;
+  border-radius: 10px;
+}
+
+ul li div img.activeBtn:hover{
+  transition: 0.4s;
+  background-color:  rgb(128, 0, 0);
+}
+
 
 /* ///////////////////       footer     ///////////////////// */
 footer{
@@ -410,4 +428,30 @@ footer{
 }
 .passLoader p{
   font-size: 24px;
+  
+/* ///////////////////    Class for js  //////////////////// */
+
+.healthLine{
+  border: 1px solid green;
+  border-radius: 10px;
+  width: 80px;
+  height: 15px;
+  background: lime;
+  font-size: 10px;
+  font-weight: 400;
+  color: black;
+  text-align: center;
+  padding-top: 1px;
+} 
+
+.gameOverDivStyle{
+  top: 0%;
+  left: 0%;
+  background: rgba(0,0,0,0.7);
+  width: 100%;
+  height: 90vh;
+  z-Index: 3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

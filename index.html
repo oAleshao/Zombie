@@ -68,11 +68,11 @@
        
         <div>
           <p>Набрано очков:</p>
-          <p class="scoreCurrent">0</p>
+          <p id="scoreCur" class="scoreCurrent">0</p>
         </div>
         <div>
           <p>Максимальный счёт:</p>
-          <p class="scoreMax">0</p>
+          <p id="scoreMax" class="scoreMax">0</p>
         </div>
         
     </div>
@@ -80,42 +80,42 @@
 
   <div id="weapon">
     <ul>
-        <li>
-          <div><img src="img/stone.png" alt="stone"></div>
-          <div><p>Камень</p></div>
-          <div><button>100</button></div>
+        <li id="StoneLi">
+          <div class="stoneStyle" id="sle"><img src="img/stone.png" alt="stone"></div>
+          <div class="stoneStyle"><p>Камень</p></div>
+          <div><button id="StoneUpgrade">100</button></div>
            
         </li>
-        <li>
-          <div><img src="img/bat.png" alt="bat"></div>
-          <div><p>Бита</p></div>
-          <div><button>150</button></div>
+        <li id="BatLi">
+          <div class="batStyle"><img src="img/bat.png" alt="bat"></div>
+          <div class="batStyle"><p>Бита</p></div>
+          <div><button id="BatUpgrade">150</button></div>
+        </li>
+        <li id="AxeLi">
+          <div class="axeStyle"><img src="img/axe.png" alt="axe"></div>
+          <div class="axeStyle"><p>Топор</p></div>
+          <div><button id="AxeUpgrade">300</button></div>
+        </li>
+        <li id="MaceLi">
+          <div class="maceStyle"><img src="img/mace.png" alt="mace"></div>
+          <div class="maceStyle"><p>Булава</p></div>
+          <div><button id="MaceUpgrade">500</button></div>
+        </li>
+        <li id="ChainsawLi">
+          <div class="sawStyle"><img src="img/benzopila.png" alt="chainsaw"></div>
+          <div class="sawStyle"><p>Бензопила</p></div>
+          <div><button id="ChainsawUpgrade">700</button></div>
         </li>
         <li>
-          <div><img src="img/axe.png" alt="axe"></div>
-          <div><p>Топор</p></div>
-          <div><button>300</button></div>
-        </li>
-        <li>
-          <div><img src="img/mace.png" alt="mace"></div>
-          <div><p>Булава</p></div>
-          <div><button>500</button></div>
-        </li>
-        <li>
-          <div><img src="img/benzopila.png" alt="chainsaw"></div>
-          <div><p>Бензопила</p></div>
-          <div><button>700</button></div>
-        </li>
-        <li>
-          <div><img src="img/soundOn.png" alt="soundOn"></div>
-          <div><img src="img/soundOff.png" alt="soundOff"></div>
+          <div><img id="TurnOnBackSound" src="img/soundOn.png" alt="soundOn"></div>
+          <div><img id="TurnOffBackSound" src="img/soundOff.png" alt="soundOff"></div>
         </li>
     </ul>
   </div>
-  </div>
+</div>
 
 
-<div id="fealdGame">
+<section id="fealdGame"></section>
   
 </section>
 
