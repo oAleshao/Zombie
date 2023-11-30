@@ -7,7 +7,7 @@
 let Round = 1;
 let countZombies = 3;
 let curZombies = countZombies;
-let Score = 200000;
+let Score = 0;
 let MaxScore = localStorage.getItem("MaxScore");
 scoreMax.textContent = MaxScore;
 let ChoseGun = 'faceSlap';
