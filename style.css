@@ -118,7 +118,7 @@ header button{
   padding: 2px 2em;
   margin: 5px;
   margin-left: 5em;
-  color: white 
+  color: white;
 }
 header button:hover
 {
@@ -133,7 +133,7 @@ header button:hover
   width: 100%;
   /* height: 100vh; */
     display: flex;
-    background:lime;
+    background: #b8cef9;
   }
 
 /* ///////////////////  главное поле с картинкой  ///////////////////// */
@@ -344,8 +344,91 @@ footer{
   font-size: 12px;
 }
 
+/* /////////////////////////  loader //////////////////////////////// */
+#loader{
+  width: 100%;
+  height: 100vh;
+  background: rgba(255, 0, 0, 0.9);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+}
+.spider{
+  /* background: pink; */
+  margin-left: 30%;
+  display: inline-block;
+  animation: swing 5s infinite;
+}
+.spiderLine{
+  width: 2px;
+  height: 300px;
+  margin-left: 49px;
+  background: white;
+}
+
+.spiderBody{
+  width: 100px;
+  height: 80px;
+  background: rgb(25, 51, 0);
+  position: relative;
+  border-radius: 50%;
+}
+
+.spiderEye{
+  width: 33px;
+  height: 33px;
+  position: absolute;
+  bottom: 20px;
+  background: white;
+  border-radius: 50%;
+}
+.spiderEyeLeft{
+  left: 15px;
+}
+.spiderEyeRight{
+  right: 15px;
+}
+
+.spiderEye:after {
+  background: red;
+  width: 7px;
+  height: 7px;
+  content: '';
+  display: block;
+  margin: 55%;
+  border-radius: 50%;
+  animation: look 3s infinite;
+}
 
 
+@keyframes look {
+  0%, 40%, 100% {
+      transform: translateX(0); 
+  }
+
+  45%, 95% {
+      transform: translateX(-110%);
+  }
+}
+
+
+@keyframes swing {
+  0%, 100% {
+      transform: translateY(0);
+  }
+
+  50% {
+      transform: translateY(-100px);
+  }
+}
+
+.passLoader{
+  margin-left: 30%;
+}
+.passLoader p{
+  font-size: 24px;
+  
 /* ///////////////////    Class for js  //////////////////// */
 
 .healthLine{
