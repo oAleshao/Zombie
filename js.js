@@ -224,7 +224,7 @@ function upgradeGun(gun)
 
 
 
-function CreateZombie(flagBoss)
+function CreateZombie(skin, hp, randomMax)
 { 
     let RundNum = Math.floor(Math.random()*6);
     let zomb = new zombiePrototype(arrSkin[RundNum],arrHp[RundNum]);
@@ -314,17 +314,14 @@ function createNewRound(){
 }
 
 function gameOver(){
-    let end = document.createElement("div");
-    end.style.top = "0%";
-    end.style.left = "0%";
-    end.style.background = "rgba(0,0,0,0.7)";
-    end.style.width = "100%";
-    end.style.height = "90vh";
-    end.style.zIndex = "3";
-    end.style.display = "flex";
-    end.style.justifyContent = "center";
-    end.style.alignContent = "center";
 
+    let lose = document.createElement("audio");
+    lose.src = "./sounds/lose.mp3";
+    lose.volume = 0.6;
+    lose.play();
+
+    let end = document.createElement("div");
+    end.classList.add("gameOverDivStyle");
     
     let imgGameOver = document.createElement("img");
     imgGameOver.src = "./img/gameOver.png";
@@ -332,7 +329,7 @@ function gameOver(){
     imgGameOver.style.height = "40%";
     imgGameOver.style.margin = "15% auto"
     
-
+ 
     
     end.append(imgGameOver);
 
