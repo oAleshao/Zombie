@@ -168,13 +168,12 @@ start.onclick = () =>{
 };
 
 function startGame() {
-    let time = 500;
+    let time = 1000;
     let zombiesSkin = getArrZombies();
     let i = 0;
     let idI = setInterval(()=>{
         // console.log("work");
         CreateZombie(zombiesSkin[i]);
-        time += 500;
         i++;
         if(i === countZombies)
             clearInterval(idI);
@@ -322,7 +321,7 @@ function CreateZombie(zomb)
             slap.play();
         }
 
-        
+
 
         health.textContent = zomb.health;
 
