@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width">
   <title>replit</title>
   <link href="style.css" rel="stylesheet" type="text/css" />
-  <script type="module" src="js.js"></script>
+  <script defer src="js.js"></script>
 </head>
 
 <body>
@@ -66,14 +66,19 @@
           дополнительные орудия нападения. Выбирайте в меню ниже.</p>
       </div>
        
-        <div>
-          <p>Набрано очков:</p>
-          <p id="scoreCur" class="scoreCurrent">0</p>
-        </div>
-        <div>
-          <p>Максимальный счёт:</p>
-          <p id="scoreMax" class="scoreMax">0</p>
-        </div>
+      <div>
+        <p>Максимальный счёт:</p>
+        <p id="scoreMax" class="scoreMax">0</p>
+      </div>
+      <div>
+        <p>Набрано очков:</p>
+        <p id="scoreCur" class="scoreCurrent">0</p>
+      </div>
+      <div>
+        <img src="img/zombieCoin.png">
+        <p id="balance" class="scoreCurrent">0</p>
+      </div>
+      
         
     </div>
     
@@ -81,8 +86,8 @@
   <div id="weapon">
     <ul>
         <li id="StoneLi">
-          <div class="stoneStyle" id="sle"><img src="img/stone.png" alt="stone"></div>
-          <div class="stoneStyle"><p>Камень</p></div>
+          <div class="stoneStyle" id="sle"><img src="img/snowball.png" alt="stone"></div>
+          <div class="stoneStyle"><p>Снежок</p></div>
           <div><button id="StoneUpgrade">100</button></div>
            
         </li>

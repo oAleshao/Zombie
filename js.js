@@ -1,40 +1,24 @@
 "use strict"
 
-// let startPosition = 95;
-// let width = 80;
+document.addEventListener("contextmenu", (event)=> { event.preventDefault(); });
 
 
-let Round = 1;
-let countZombies = 3;
-let curZombies = countZombies;
-let Score = 0;
-let MaxScore = localStorage.getItem("MaxScore");
-scoreMax.textContent = MaxScore;
-let ChoseGun = 'faceSlap';
-let audioTrue = true;
-let ChosenGunDamage = 5;
+//#region Окно загрузки
 
-
-document.addEventListener("contextmenu", (event)=>
-{
-    event.preventDefault();
+loader.onclick = ()=>{
+    backSound.volume = 0.1;
+    backSound.loop = true;
+    backSound.play();
+    audioTrue = true;
+    TurnOffBackSound.classList.remove("activeBtn");
+    TurnOnBackSound.classList.add("activeBtn");
+    loader.style.display = "none";
 }
-);
+
+//#endregion
 
 
-
-//////////////////////////////////////////////////
-
-let arrSkin = ['./img/0.png','./img/1.png' ,'./img/2.png' , './img/3.png' , './img/4.png' , './img/5.png'];
-let arrSkinBoss = ['./img/boss0.png','./img/boss1.png' ,'./img/boss2.png' , './img/boss3.png'];
-let positionTop = [10, 30, 50, 60,];
-let arrHp = [100,150, 200,250,300];
-
-
-//с каждым раундом увеличиваем хп зомби на 1.2. Каждый 5 раунд выходит босс. Менять Score. Добавляем каждый раун по одному зомби.
-//
-
-
+//#region Объекты
 
 class stone
 {
@@ -44,10 +28,6 @@ class stone
         this.upDamage = 10;
     }
 
-    upgradeGun() {
-        this.upDamage +=this.damage;
-        this.price = Math.round(this.price *= 1.25);
-    }
 }
 
 class bat
@@ -56,11 +36,6 @@ class bat
         this.damage = 20, //дефолтный
         this.price = 150,
         this.upDamage = 20
-    }
-
-    upgradeGun() {
-        this.upDamage +=this.damage;
-        this.price = Math.round(this.price *= 1.25);
     }
 }
 
@@ -71,11 +46,6 @@ class axe
         this.price = 300,
         this.upDamage = 50;
     }
-
-    upgradeGun() {
-        this.upDamage +=this.damage;
-        this.price = Math.round(this.price *= 1.25);
-    }
 }
 
 class mace {
@@ -85,10 +55,6 @@ class mace {
         this.upDamage = 80;
     }
 
-    upgradeGun() {
-        this.upDamage +=this.damage;
-        this.price = Math.round(this.price *= 1.25);
-    }
 }
 
 class chain
@@ -98,34 +64,281 @@ class chain
         this.price = 700
         this.upDamage = 100;
     }
-    
-    upgradeGun() {
-        this.upDamage +=this.damage;
-        this.price = Math.round(this.price *= 1.25);
-    }
 }
 
 
+class zombiePrototype
+{
+    constructor(image , health, position, height, width, speed = 1200)
+    {
+        this.image = image;
+        this.health = health;
+        this.topPosition = position;
+        this.height = height;
+        this.width = width;
+        this.speed = speed;
+    }
+}
 
-let Stone = new stone();
-let Axe = new axe();
-let Bat = new bat();
-let Mace = new mace();
-let Chain = new chain();
+//#endregion
 
+
+//#region  Свойства
+
+let Round = 1;
+let countZombies = 3;
+let curZombies = countZombies;
+let coins = localStorage.getItem("Coins");
+let Score = 0;
+let MaxScore = 0;
+let ChoseGun = 'faceSlap';
+let audioTrue = true;
+let ChosenGunDamage = 5;
+let youLose = false;
+let arrSkin = ['./img/0.png','./img/1.png' ,'./img/2.png' , './img/3.png' , './img/4.png' , './img/5.png'];
+let arrSkinBoss = ['./img/boss0.png','./img/boss1.png' ,'./img/boss2.png' , './img/boss3.png'];
+let positionTop = [5, 20, 35, 50, 65];
+//let arrHp = [100,150, 200,250,300];
+let arrHp = [30,50, 70,100,150];
+
+
+
+let Stone, Axe, Bat, Mace, Chain = null;
+
+
+let end = document.createElement("div");
+end.classList.add("gameOverDivStyle");
+
+let imgGameOver = document.createElement("img");
+imgGameOver.src = "./img/gameOver.png";
+imgGameOver.classList.add("imgGameOver");
+end.append(imgGameOver);
+
+function init(){
+    coins = localStorage.getItem("Coins");
+    if(coins === null || coins === undefined)
+        coins = 0;
+
+    MaxScore = localStorage.getItem("MaxScore");
+    if(MaxScore === null || MaxScore === undefined)
+        MaxScore = 0;
+
+    scoreMax.textContent = MaxScore;
+    balance.textContent = coins;
+    Stone = JSON.parse(localStorage.getItem("Stone"));
+    if(Stone === null)
+        Stone = new stone();
+    Axe = JSON.parse(localStorage.getItem("Mace"));
+    if(Axe === null)
+        Axe = new axe();
+    Bat = JSON.parse(localStorage.getItem("Axe"));
+    if(Bat === null)
+        Bat = new bat();
+    Mace = JSON.parse(localStorage.getItem("Bat"));    
+    if(Mace === null)
+        Mace = new mace();    
+    Chain = JSON.parse(localStorage.getItem("Chainsaw"));
+    if(Chain === null)
+        Chain = new chain();
+    
+    StoneUpgrade.textContent = Stone.price; 
+    MaceUpgrade.textContent = Mace.price;
+    AxeUpgrade.textContent = Axe.price;
+    BatUpgrade.textContent = Bat.price;  
+    ChainsawUpgrade.textContent = Chain.price;
+    
+}
+
+init();
+
+
+IniGun();
+
+//#endregion
+
+
+//#region Игра
 
 start.onclick = () =>{
-    IniGun();
+    if(youLose)
+        fealdGame.removeChild(end);
+    youLose = false;
     startGame();
+    start.setAttribute('disabled', '');
 };
 
 function startGame() {
-    let time = 100;
-    for(let i = 0; i < countZombies; i++ ){
-        setTimeout(CreateZombie,time);
-        time += 300;
-    }
+    let time = 500;
+    let zombiesSkin = getArrZombies();
+    let i = 0;
+    let idI = setInterval(()=>{
+        // console.log("work");
+        CreateZombie(zombiesSkin[i]);
+        time += 500;
+        i++;
+        if(i === countZombies)
+            clearInterval(idI);
+    }, time);
 }
+
+
+function createNewRound(){
+    // console.log("work Create new Round");
+    ++countZombies;
+    localStorage.setItem("Round", ++Round);
+    for(let i = 0; i< arrHp.length; i++){
+        arrHp[i] = Math.floor(arrHp[i] *= 1.15);
+    }
+    curZombies = countZombies;
+    startGame();
+}
+
+
+function gameOver(){
+    // console.log("work game Over");
+    if(!youLose){
+        let lose = document.createElement("audio");
+        lose.src = "./sounds/lose.mp3";
+        lose.volume = 0.6;
+        lose.play();
+        youLose = true;
+    }
+
+    document.querySelectorAll('.zombies').forEach(function(elem){
+        elem.parentNode.removeChild(elem);
+    });
+
+
+    start.removeAttribute('disabled', '');
+    countZombies = 3;
+    Round = 1;
+    arrHp = [100,150, 200,250,300];
+    fealdGame.append(end);
+
+}
+
+function getArrZombies(){
+    let zombiesSkin = [];
+    let RundNum = 0;
+
+    if(Round % 5 === 0){
+        zombiesSkin.push(new zombiePrototype(arrSkinBoss[Math.floor(Math.random()*3)], (arrHp[4]+500), positionTop[Math.floor(Math.random()*6)], 150, 150));
+        for(let i = 1; i < countZombies; i++){
+            RundNum = Math.floor(Math.random()*5);
+            zombiesSkin.push(new zombiePrototype(arrSkin[RundNum], arrHp[RundNum], positionTop[Math.floor(Math.random()*5)], 130, 80, RundNum*100+400));
+        }
+    }
+    else{
+        for(let i = 0; i < countZombies; i++){
+            RundNum = Math.floor(Math.random()*5);
+            zombiesSkin.push(new zombiePrototype(arrSkin[RundNum], arrHp[RundNum], positionTop[Math.floor(Math.random()*5)],130, 80,  RundNum*100+400));
+        }
+    }
+    return zombiesSkin;
+}
+
+
+setInterval(()=>{
+    localStorage.setItem("Coins", coins);    
+    localStorage.setItem("MaxScore", MaxScore);   
+    localStorage.setItem("Stone", JSON.stringify(Stone)); 
+    localStorage.setItem("Mace", JSON.stringify(Mace));
+    localStorage.setItem("Axe", JSON.stringify(Axe));
+    localStorage.setItem("Bat", JSON.stringify(Bat));    
+    localStorage.setItem("Chainsaw", JSON.stringify(Chain));
+}, 5000);
+
+
+function CreateZombie(zomb)
+{ 
+    let startPosition = 93;
+    let amoutCoin = Math.round(zomb.health/100*5);
+    let blockZ = document.createElement("div");
+    blockZ.className = "zombies";
+    blockZ.style.position = "absolute";
+    blockZ.style.zIndex = zomb.topPosition;
+
+    blockZ.style.top =  zomb.topPosition + "%";
+    blockZ.style.left =  startPosition + "%";
+
+    let z = document.createElement("img");
+    z.src = zomb.image;
+    z.style.fill = "fill";
+    z.style.height = zomb.height + "px";
+    z.style.width = zomb.width + "px";
+   
+    let health = document.createElement("div");
+    health.classList.add("healthLine");
+    health.textContent = zomb.health;
+    blockZ.append(health);
+    blockZ.append(z);
+
+    let idInterval = setInterval(() => {
+        if(startPosition < 30 || youLose)
+        {
+            clearInterval(idInterval);
+            gameOver();
+        }
+        startPosition -= 0.5;
+        blockZ.style.left = startPosition + "%"
+    }, zomb.speed);
+
+    blockZ.onclick = (event) => {
+
+        zomb.health -= ChosenGunDamage;
+       
+        if(zomb.health <=0)
+        {
+            Score += Math.floor(50*1.13);
+            scoreCur.textContent = Score;
+
+            coins = amoutCoin + parseInt(coins);
+            balance.textContent = coins;
+
+            if(Score > MaxScore) {
+                scoreMax.textContent = Score;
+                MaxScore = Score;
+            }
+
+            clearInterval(idInterval);
+            fealdGame.removeChild(blockZ);
+
+            curZombies--;
+            if(curZombies === 0)
+            {
+                if(Score > MaxScore)
+                    localStorage.setItem("MaxScore", Score);
+                createNewRound();
+    
+            }
+            return;
+        }
+       
+
+        if(audioTrue){
+            let slap = document.createElement("audio");
+            slap.src = `./sounds/${ChoseGun}.mp3`;
+            slap.volume = 0.1;
+            slap.play();
+        }
+
+        
+
+        health.textContent = zomb.health;
+
+        
+    }
+
+    fealdGame.append(blockZ);
+}
+
+
+
+
+//#endregion
+
+
+//#region Музыка и звуки
 
 TurnOnBackSound.onclick = ()=>{
     backSound.volume = 0.1;
@@ -143,6 +356,8 @@ TurnOffBackSound.onclick = ()=>{
     audioTrue = false;
 }
 
+//#endregion
+
 
 //#region  Gun
 
@@ -152,7 +367,6 @@ function IniGun(){
         event.stopPropagation();
          upgradeGun(Stone); 
          event.target.textContent = Stone.price;
-         localStorage.setItem("StoneUpgrade", Stone.price);
         });
     StoneLi.addEventListener('click' , ()=>{ChosenGunDamage = Stone.upDamage; setGunDamage("StoneLi");});
 
@@ -161,15 +375,14 @@ function IniGun(){
         event.stopPropagation();
          upgradeGun(Mace);
          event.target.textContent = Mace.price;
-         localStorage.setItem("MaceUpgrade", Mace.price);
+        
         });
     MaceLi.addEventListener('click' , ()=>{ChosenGunDamage = Mace.upDamage; setGunDamage("MaceLi");});
 
     AxeUpgrade.addEventListener(('click') , (event)=> { 
         event.stopPropagation(); 
         upgradeGun(Axe);
-        event.target.textContent = Axe.price
-        localStorage.setItem("AxeUpgrade", Axe.price);
+        event.target.textContent = Axe.price;
     });
     AxeLi.addEventListener('click' , ()=>{ChosenGunDamage = Axe.upDamage; setGunDamage("AxeLi");});
 
@@ -178,7 +391,6 @@ function IniGun(){
         event.stopPropagation(); 
         upgradeGun(Bat);
         event.target.textContent = Bat.price;
-        localStorage.setItem("BatUpgrade", Bat.price);
     });
     BatLi.addEventListener('click' , ()=>{ChosenGunDamage = Bat.upDamage; setGunDamage("BatLi");});
 
@@ -187,7 +399,6 @@ function IniGun(){
         event.stopPropagation();
         upgradeGun(Chain);
         event.target.textContent = Chain.price;
-        localStorage.setItem("ChainsawUpgrade", Chain.price);
     })
     ChainsawLi.addEventListener('click' , ()=>{ChosenGunDamage = Chain.upDamage; setGunDamage("ChainsawLi");});
 
@@ -214,141 +425,21 @@ function setGunDamage(gun) {
 
 function upgradeGun(gun)
 {
-    if(Score>=gun.price)
+    if(parseInt(coins)>=gun.price)
     {
-        gun.upgradeGun();
+        coins = parseInt(coins) - gun.price;
+        balance.textContent = coins;
+        gun.upDamage += gun.damage;
+        gun.price = Math.round(gun.price *= 1.25);
     }
 }
-
 //#endregion
 
 
 
-function CreateZombie(skin, hp, randomMax)
-{ 
-    let RundNum = Math.floor(Math.random()*6);
-    let zomb = new zombiePrototype(arrSkin[RundNum],arrHp[RundNum]);
 
 
-    let startPosition = 35;
-    let blockZ = document.createElement("div");
-    blockZ.className = "zombies";
-    blockZ.style.position = "absolute";
-
-    blockZ.style.top =  (Math.floor(Math.random()*60)+13)+ "%";
-    blockZ.style.left =  startPosition + "%";
 
 
-    let number = Math.floor(Math.random() * 3);
-    let z = document.createElement("img");
-    z.src = zomb.image;
-    z.style.fill = "fill";
-    z.style.height = "130px";
-    z.style.width = "80px";
-   
-    let health = document.createElement("div");
-    health.classList.add("healthLine");
-    health.textContent = zomb.health;
-    blockZ.append(health);
-    blockZ.append(z);
-
-    let idInterval = setInterval(() => {
-        if(startPosition === 30)
-        {
-            gameOver();
-        }
-        blockZ.style.left = --startPosition + "%"
-    }, 1000);
-
-    blockZ.onclick = (event) => {
-
-        zomb.health -= ChosenGunDamage;
-       
-        if(zomb.health <=0)
-        {
-            Score += Math.floor(50*1.13);
-            scoreCur.textContent = Score;
-            if(Score > MaxScore) {
-                scoreMax.textContent = Score;
-                MaxScore = Score;
-                localStorage.setItem("MaxScore", Score);
-
-            }
-            clearInterval(idInterval);
-            fealdGame.removeChild(blockZ);
-            curZombies--;
-            if(curZombies === 0)
-            {
-                if(Score > MaxScore)
-                    localStorage.setItem("MaxScore", Score);
-                createNewRound();
-    
-            }
-            return;
-        }
-       
-
-        if(audioTrue){
-            let slap = document.createElement("audio");
-            slap.src = `./sounds/${ChoseGun}.mp3`;
-            slap.volume = 0.1;
-            slap.play();
-        }
-
-        health.textContent = zomb.health;
-
-        
-    }
-
-    fealdGame.append(blockZ);
-}
-
-function createNewRound(){
-    ++countZombies;
-    localStorage.setItem("Round", ++Round);
-    for(let i = 0; i< arrHp.length; i++){
-        arrHp[i] = Math.floor(arrHp[i] *= 1.2);
-    }
-    curZombies = countZombies;
-    startGame();
-}
-
-function gameOver(){
-
-    let lose = document.createElement("audio");
-    lose.src = "./sounds/lose.mp3";
-    lose.volume = 0.6;
-    lose.play();
-
-    let end = document.createElement("div");
-    end.classList.add("gameOverDivStyle");
-    
-    let imgGameOver = document.createElement("img");
-    imgGameOver.src = "./img/gameOver.png";
-    imgGameOver.style.width = "50%";
-    imgGameOver.style.height = "40%";
-    imgGameOver.style.margin = "15% auto"
-    
- 
-    
-    end.append(imgGameOver);
-
-    document.querySelectorAll('.zombies').forEach(function(elem){
-        elem.parentNode.removeChild(elem);
-    });
 
 
-    
-    fealdGame.append(end);
-}
-
-
-class zombiePrototype
-{
-    constructor(image , health)
-    {
-        this.image = image,
-        this.health = health
-
-    }
-}
